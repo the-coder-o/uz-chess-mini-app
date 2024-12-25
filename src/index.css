@@ -27,10 +27,6 @@ a:hover {
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
 }
 
@@ -134,4 +130,11 @@ button:focus-visible {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.container{
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 10px;
 }

@@ -1,17 +1,15 @@
-import { Button } from './components/ui/button'
-import { useTelegram } from './hooks/useTelegram'
+import ChessGame from '@/board/ChessboardComponent.tsx'
+import { Footer } from '@/sections/footer/footer.tsx'
+import { Header } from '@/sections/header/header.tsx'
+import { BrowserRouter } from 'react-router-dom'
 
 const App = () => {
-  const { initData, WebApp } = useTelegram()
-
   return (
-    <div className="p-4">
-      <div>
-        <h1 className="text-2xl font-bold">Telegram Mini App</h1>
-        <p className="mt-2">Hello, {initData?.user?.first_name || 'Guest'}!</p>
-        <Button onClick={() => WebApp.close()}>Close App</Button>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <ChessGame />
+      <Footer />
+    </BrowserRouter>
   )
 }
 
