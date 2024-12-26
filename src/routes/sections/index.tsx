@@ -3,11 +3,12 @@ import { authRoutes } from './auth'
 
 import { exposed } from '@/routes/sections/exposed'
 import { useAuthContext } from '@/auth/hooks/useAuthContext'
+import { notFound } from '@/routes/sections/404.tsx'
 
 export function Router() {
-  const { authenticated } = useAuthContext()
+  const { authenticated, unauthenticated } = useAuthContext()
 
-  const routes = authenticated ? [...exposed, { path: '*', element: <Navigate to="/" replace /> }] : [...authRoutes, { path: '*', element: <Navigate to="/auth/sign-in" replace /> }]
+  const routes = [...(authenticated ? [{ path: '*', element: <Navigate to="/" /> }] : authRoutes), ...(unauthenticated ? [{ path: '*', element: <Navigate to="/auth/sign-in" /> }] : exposed), ...notFound]
 
   return useRoutes(routes)
 }
