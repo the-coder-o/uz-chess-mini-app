@@ -1,17 +1,20 @@
-import ChessGame from '@/board/ChessboardComponent.tsx'
-import { Footer } from '@/sections/footer/footer.tsx'
-import { Header } from '@/sections/header/header.tsx'
-import { BrowserRouter } from 'react-router-dom'
 import { Toaster } from 'sonner'
+import { useScrollToTop } from '@/hooks/useScrollTop'
+import { AuthProvider } from '@/auth/context'
+import { Router } from '@/routes'
+import { Header } from '@/sections/header/header.tsx'
+import { Footer } from '@/sections/footer/footer.tsx'
 
 const App = () => {
+  useScrollToTop()
+
   return (
-    <BrowserRouter>
+    <AuthProvider>
       <Header />
-      <ChessGame />
-      <Footer />
       <Toaster />
-    </BrowserRouter>
+      <Router />
+      <Footer />
+    </AuthProvider>
   )
 }
 
