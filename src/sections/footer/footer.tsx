@@ -1,41 +1,33 @@
-import { Book, CastleIcon as ChessKnight, Grid2X2, Home, User } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export const Footer = () => {
+  const location = useLocation()
+
+  const hiddenRoutes = ['/auth/sign-up', '/auth/sign-in', '/auth/sms-verification']
+  if (hiddenRoutes.includes(location.pathname)) {
+    return null
+  }
+
+  const navItems = [
+    { path: '/', label: 'Sahifa', filledIcon: 'home_filled.svg', outlinedIcon: 'home_outlined.svg' },
+    { path: '/courses', label: 'Kurslar', filledIcon: 'courses_filled.svg', outlinedIcon: 'courses_outlined.svg' },
+    { path: '/game', label: "O'yin", filledIcon: 'game_filled.svg', outlinedIcon: 'game_outlined.svg' },
+    { path: '/interactive', label: 'Interaktiv', filledIcon: 'puzzle_filled.svg', outlinedIcon: 'puzzle_outlined.svg' },
+    { path: '/profile', label: 'Profil', filledIcon: 'profile_filled.svg', outlinedIcon: 'profile_outlined.svg' },
+  ]
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 border-t bg-white p-2 md:relative">
       <div className="max-w-screen-xl">
         <ul className="flex items-center justify-around">
-          <li>
-            <Link to="/" className="flex flex-col items-center gap-1 p-2 text-sm text-gray-600 hover:text-gray-900">
-              <Home className="h-5 w-5" />
-              <span>Sahifa</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/courses" className="flex flex-col items-center gap-1 p-2 text-sm text-gray-600 hover:text-gray-900">
-              <Book className="h-5 w-5" />
-              <span>Kurslar</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/game" className="flex flex-col items-center gap-1 p-2 text-sm text-gray-600 hover:text-gray-900">
-              <ChessKnight className="h-5 w-5" />
-              <span>O&apos;yin</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/interactive" className="flex flex-col items-center gap-1 p-2 text-sm text-gray-600 hover:text-gray-900">
-              <Grid2X2 className="h-5 w-5" />
-              <span>Interaktiv</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/profile" className="flex flex-col items-center gap-1 p-2 text-sm text-gray-600 hover:text-gray-900">
-              <User className="h-5 w-5" />
-              <span>Profil</span>
-            </Link>
-          </li>
+          {navItems.map((item) => (
+            <li key={item.path}>
+              <Link to={item.path} className="flex flex-col items-center gap-1 p-2 text-sm text-gray-600 hover:text-gray-900">
+                <img src={`src/assets/svg/${location.pathname === item.path ? item.filledIcon : item.outlinedIcon}`} alt={item.label} />
+                <span>{item.label}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </nav>

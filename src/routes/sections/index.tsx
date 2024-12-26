@@ -1,27 +1,13 @@
-import { Suspense } from 'react'
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
-
-import { useAuthContext } from '@/auth/hooks/useAuthContext'
-
-import { notFound } from './404'
+import { Navigate, useRoutes } from 'react-router-dom'
 import { authRoutes } from './auth'
 
-export const Router = () => {
+import { exposed } from '@/routes/sections/exposed'
+import { useAuthContext } from '@/auth/hooks/useAuthContext'
+
+export function Router() {
   const { authenticated } = useAuthContext()
 
-  const routes = [
-    ...(authenticated ? [{ path: '*', element: <Navigate to="/" /> }] : authRoutes),
-    // ...(unauthenticated
-    //   ? [{ path: "*", element: <Navigate to="/auth/sign-in" /> }]
-    //   : dashboard),
-    ...notFound,
-  ]
+  const routes = authenticated ? [...exposed, { path: '*', element: <Navigate to="/" replace /> }] : [...authRoutes, { path: '*', element: <Navigate to="/auth/sign-in" replace /> }]
 
-  const router = createBrowserRouter(routes)
-
-  return (
-    <Suspense fallback="Loading...">
-      <RouterProvider router={router} />
-    </Suspense>
-  )
+  return useRoutes(routes)
 }
